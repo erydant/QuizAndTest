@@ -1,4 +1,5 @@
 ﻿
+using QuizAndTest.controleur;
 using QuizzAndTest.Model;
 using System;
 using System.Collections.Generic;
@@ -18,22 +19,15 @@ namespace QuizAndTest
     {
         int reponseQuestion = 0;
         Partie partie;
-
-        private void Init()
+        private DataView dvQ;
+        QuestionBDD dt_listeQuestion;
+        private void Init(int diff)
         {
             InitializeComponent();
 
-            List<Question> ListeQuestions = new List<Question>();
-            ListeQuestions.Add(new Question("Quelle est la capitale de la France ?", 1, 1, "Paris", "Londres", "Berlin", "Madrid", "Rome"));
-            ListeQuestions.Add(new Question("Quelle est la capitale de l'Espagne ?", 4, 1, "Paris", "Londres", "Berlin", "Madrid", "Rome"));
-            ListeQuestions.Add(new Question("Quelle est la capitale de l'Allemagne ?", 3, 1, "Paris", "Londres", "Berlin", "Madrid", "Rome"));
-            ListeQuestions.Add(new Question("Quelle est la capitale de l'Italie ?", 5, 1, "Paris", "Londres", "Berlin", "Madrid", "Rome"));
-            ListeQuestions.Add(new Question("Quelle est la capitale de l'Angleterre ?", 2, 1, "Paris", "Londres", "Berlin", "Madrid", "Rome"));
-            ListeQuestions.Add(new Question("Quelle est la capitale de la Belgique ?", 1, 1, "Bruxelles", "Londres", "Berlin", "Madrid", "Rome"));
-            ListeQuestions.Add(new Question("Quelle est la capitale de la Suisse ?", 2, 1, "Bruxelles", "Berne", "Berlin", "Madrid", "Rome"));
-            ListeQuestions.Add(new Question("Quelle est la capitale du Luxembourg ?", 3, 1, "Bruxelles", "Berne", "Luxembourg", "Madrid", "Rome"));
-            ListeQuestions.Add(new Question("Quelle est la capitale du Portugal ?", 4, 1, "Bruxelles", "Berne", "Luxembourg", "Lisbonne", "Rome"));
-            ListeQuestions.Add(new Question("Quelle est la capitale de l'Autriche ?", 5, 1, "Bruxelles", "Berne", "Luxembourg", "Lisbonne", "Vienne"));
+            //Déclaration d'une nouvelle liste
+            dt_listeQuestion = new QuestionBDD();
+            List<Question> ListeQuestions = dt_listeQuestion.GetListeQuestionDiff(diff);
 
             partie = new Partie(ListeQuestions);
 
@@ -44,7 +38,7 @@ namespace QuizAndTest
         }
         public jeu(string nomJ, string prenomJ, string difficultePartie)
         {
-            Init();
+            Init(Convert.ToInt32(difficultePartie));
             string nom_prenom = nomJ + " " + prenomJ;
             nom_tb.Text = nom_prenom;
             difficulte_tb.Text = difficultePartie;
@@ -101,10 +95,11 @@ namespace QuizAndTest
         {
             this.Close();
         }
-       
 
+        private void difficulte_tb_TextChanged(object sender, EventArgs e)
+        {
 
-
+        }
     }
 }
 

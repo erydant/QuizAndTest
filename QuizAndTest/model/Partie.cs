@@ -23,6 +23,7 @@ namespace QuizzAndTest.Model
         public int dureeTQuestion;
         public Timer timer;
         private menu SF;
+        public List<Question> listeAleatoire;
 
 
         public Partie(List<Question> ListeQuestions)
@@ -32,7 +33,7 @@ namespace QuizzAndTest.Model
             numeroQuestion = 0;
             questions = ListeQuestions;
             nombreQuestions = questions.Count;
-           
+            listeAleatoireQuestion(questions);
         }
         public Partie(List<Question> ListeQuestions, string nomJ, string prenomJ, string difficulteJ)
         {
@@ -176,7 +177,36 @@ namespace QuizzAndTest.Model
             return null;
 
         }
-        
+
+        public List<Question> listeAleatoireQuestion(List<Question> ListeQuestions)
+        {
+            listeAleatoire = new List<Question>();
+            List<int> indices = new List<int>(); 
+
+            for (int i = 0; i < questions.Count; i++)
+            {
+                indices.Add(i); 
+            }
+
+            Random rnd = new Random();
+
+            
+            while (listeAleatoire.Count < 10)
+            {
+              
+                int randomIndex = rnd.Next(0, indices.Count);
+                int selectedIndex = indices[randomIndex];
+
+               
+                listeAleatoire.Add(questions[selectedIndex]);
+
+                
+                indices.RemoveAt(randomIndex);
+            }
+            return listeAleatoire;
+        }
+
+
         public void gestionTimer(TextBox txt_timer, ProgressBar pb_dureeRepQuestion, TextBox txt_affichage, CheckBox ckb_reponse1, CheckBox ckb_reponse2, CheckBox ckb_reponse3, CheckBox ckb_reponse4, CheckBox ckb_reponse5, Form formulaire, GroupBox gd_reponse, PictureBox PbImage, Label lblquestion)
         {
             timer = new Timer();

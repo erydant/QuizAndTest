@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySqlConnector;
+using QuizzAndTest.Model;
 
 namespace QuizAndTest.controleur
 {
@@ -56,8 +57,44 @@ namespace QuizAndTest.controleur
             }
             return dt;
         }
+        public List<Question> GetListeQuestionDiff(int diff)
+        {
+            List<Question> ListeQuestions = new List<Question>();
+            DataTable dt = new DataTable();
+            ConnetionBDD conn = new ConnetionBDD();
 
-     
+            try
+            {
+                using (MySqlCommand cmd = new MySqlCommand("SELECT * FROM QUESTION WHERE IDDIFFICULTE = @diff", conn.MySqlCo))
+                {
+                    conn.MySqlCo.Open();
+                    cmd.Parameters.AddWithValue("@diff", diff);
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    dt.Load(reader);
+                }
+                foreach (DataRow row in dt.Rows)
+                {
+                    ListeQuestions.Add(new Question(
+                        row["ENONCEQUESTION"].ToString(),
+                        Convert.ToInt32(row["BONREPQUESTION"]),
+                        Convert.ToInt32(row["IDDIFFICULTE"]),
+                        row["REPONSE1QUESTION"].ToString(),
+                        row["REPONSE2QUESTION"].ToString(),
+                        row["REPONSE3QUESTION"].ToString(),
+                        row["REPONSE4QUESTION"].ToString(),
+                        row["REPONSE5QUESTION"].ToString()
+                    ));
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString(), "Erreur 3", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.RightAlign, true);
+            }
+            conn.MySqlCo.Close();
+            conn.MySqlCo = null;
+            return ListeQuestions;
+        }
+
 
 
 

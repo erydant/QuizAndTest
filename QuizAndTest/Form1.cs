@@ -34,7 +34,7 @@ namespace QuizAndTest
             string result = "";
             if (txt_nom.Text != "" && txt_prenom.Text != "" && cb_difficulté.SelectedIndex >= -1)
             {
-                result += txt_prenom.Text + " " + txt_nom.Text + "\r\n La difficultés sélectionnée est : " + cb_difficulté.SelectedItem;
+                result += txt_prenom.Text + " " + txt_nom.Text + "\r\n La difficultés sélectionnée est : " + cb_difficulté.SelectedValue;
                 MessageBox.Show(result, "Bonjour", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 jeu J = new jeu(txt_nom.Text, txt_prenom.Text, cb_difficulté.SelectedValue.ToString() );
                 (System.Windows.Forms.Application.OpenForms["menu"] as menu).openChildForm(J);
@@ -73,7 +73,7 @@ namespace QuizAndTest
 
         private void cb_difficulté_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cb_difficulté.SelectedItem == "Enfer")
+            if (cb_difficulté.SelectedItem.ToString() == "Enfer")
             {
                 this.BackColor = Color.Red;
                 lbl_name.Font = new Font(lbl_name.Font, FontStyle.Bold);

@@ -195,6 +195,7 @@
             this.difficulte_tb.Name = "difficulte_tb";
             this.difficulte_tb.Size = new System.Drawing.Size(144, 20);
             this.difficulte_tb.TabIndex = 14;
+            this.difficulte_tb.TextChanged += new System.EventHandler(this.difficulte_tb_TextChanged);
             // 
             // nom_tb
             // 
